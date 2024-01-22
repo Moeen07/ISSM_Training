@@ -1,5 +1,3 @@
 This is a demo text file
 
-Added second branch
-
 Test Line
