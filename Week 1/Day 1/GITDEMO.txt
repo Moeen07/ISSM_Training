@@ -1,8 +1,5 @@
 This is a demo text file
 Confirm adding the second branch
 Conflict now resolved
-<<<<<<< HEAD
 I work at SPS
-=======
 I work at ISSM
->>>>>>> secondBranch
