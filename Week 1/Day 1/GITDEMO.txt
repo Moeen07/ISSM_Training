@@ -1,3 +1,2 @@
 This is a demo text file
-
 Confirm adding the second branch
