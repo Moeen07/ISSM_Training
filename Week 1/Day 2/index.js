@@ -1,1 +1,3 @@
-console.log("Hello World");
+const employee = require("./second");
+
+console.log("Hello World", employee);
