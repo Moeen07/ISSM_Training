@@ -1,3 +1,5 @@
+//(function(exports,require,module,__filemame,__dirname){
+
 user = {
   name: "Moonis",
   favNum: 7,
@@ -5,3 +7,4 @@ user = {
 };
 
 module.exports = user;
+//})
