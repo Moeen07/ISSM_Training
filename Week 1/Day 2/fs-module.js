@@ -12,3 +12,5 @@ console.log("Finished reading file"); // To demonstrate asynchronous nature of N
 fs.writeFile("Test.txt", "New data inserted", () => {
   console.log("Written to the file");
 });
+
+//use append file to add to the file
