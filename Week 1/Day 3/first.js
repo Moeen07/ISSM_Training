@@ -1,8 +1,8 @@
 console.log("Hello World");
 
-fullName = "Tony Stark";
-price = 99.99;
-age = 24;
-x = null;
-y = undefined;
+const fullName = "Tony Stark";
+let price = 99.99;
+let age = 24;
+let x = null;
+let y = undefined;
 console.log(fullName, price, age, x, y);
