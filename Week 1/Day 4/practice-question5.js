@@ -1,5 +1,5 @@
 let num = 5;
-let arr = new Array(num);
+let arr = [];
 for (let i = 0; i < num; i++) {
   arr[i] = i + 1;
 }
