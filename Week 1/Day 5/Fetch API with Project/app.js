@@ -1,11 +1,13 @@
-const URL = "https://meowfacts.herokuapp.com/";
+const BASE_URL =
+  "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur/jpy.json";
 
-const getFacts = async () => {
-  let response = await fetch(URL);
-  console.log(response);
-  console.log(response.headers.get("Content-Type"));
+const dropdowns = document.querySelectorAll(".dropdown select");
 
-  let data = await response.json();
-  console.log(data);
-};
-getFacts();
+for (let select of dropdowns) {
+  for (currcode in countryList) {
+    let newOption = document.createElement("option");
+    newOption.innerText = currcode;
+    newOption.value = currcode;
+    select.append(newOption);
+  }
+}
