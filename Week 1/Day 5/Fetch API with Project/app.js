@@ -8,6 +8,21 @@ for (let select of dropdowns) {
     let newOption = document.createElement("option");
     newOption.innerText = currcode;
     newOption.value = currcode;
+    if (select.name === "from" && currcode === "USD") {
+      newOption.selected = "selected";
+    } else if (select.name === "to" && currcode === "INR") {
+      newOption.selected = "selected";
+    }
     select.append(newOption);
   }
+  select.addEventListener("change", (evt) => {
+    updateFlag(evt.target);
+  });
 }
+const updateFlag = (el) => {
+  let currcode = el.value;
+  let countryCode = countryList[currcode];
+  let newSrc = `https://flagsapi.com/${countryCode}/flat/64.png`;
+  let img = el.parentElement.querySelector("img");
+  img.src = newSrc;
+};
