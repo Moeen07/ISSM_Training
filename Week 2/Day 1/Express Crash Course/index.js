@@ -4,10 +4,16 @@ const members = require("./Members");
 const logger = require("./middleware/logger");
 const app = express();
 
-app.use(logger);
+//app.use(logger);
 
+// Get all members
 app.get("/api/members", (req, res) => {
   res.json(members);
+});
+
+// Get single member
+app.get("/api/members/:id", (req, res) => {
+  res.json(members.filter((member) => member.id == req.params.id));
 });
 
 // Set a static folder
