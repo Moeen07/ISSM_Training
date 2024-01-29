@@ -6,6 +6,10 @@ const app = express();
 
 //app.use(logger);
 
+// body parser middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false })); // to handle form submissions
+
 // Set a static folder
 app.use(express.static(path.join(__dirname, "public")));
 
