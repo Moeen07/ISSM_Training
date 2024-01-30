@@ -41,7 +41,7 @@ router.get("/contact", (req, res) => {
   res.render("contact");
 });
 
-//-----------Get Single Post Route-------------------------
+//-----------Get Single Post Route--------------------------------------
 router.get("/post/:id", async (req, res) => {
   try {
     let slug = req.params.id;
@@ -55,6 +55,32 @@ router.get("/post/:id", async (req, res) => {
     console.log(error);
   }
 });
+//------------------------------------------------------------------------
+
+//-------------------------------Search Route-----------------------------------------------------
+router.post("/search", async (req, res) => {
+  try {
+    const locals = {
+      title: "Search",
+      description: "...",
+    };
+
+    let searchTerm = req.body.searchTerm;
+    const searchNoSpecialChar = searchTerm.replace(/[^a-zA-z0-9]/g, "");
+
+    const data = await Post.find({
+      $or: [
+        { title: { $regex: new RegExp(searchNoSpecialChar, "i") } },
+        { body: { $regex: new RegExp(searchNoSpecialChar, "i") } },
+      ],
+    });
+    res.render("search", { locals, data });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//------------------------------------------------------------------------------------------------
 
 module.exports = router;
 
