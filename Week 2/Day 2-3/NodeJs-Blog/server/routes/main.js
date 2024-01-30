@@ -41,6 +41,21 @@ router.get("/contact", (req, res) => {
   res.render("contact");
 });
 
+//-----------Get Single Post Route-------------------------
+router.get("/post/:id", async (req, res) => {
+  try {
+    const locals = {
+      title: "NodeJs Blog",
+      description: "Simple Blog created with NodeJs,Express and MongoDB",
+    };
+    let slug = req.params.id;
+    const data = await Post.findById({ _id: slug });
+    res.render("post", { locals, data });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;
 
 //-------Sample Dataset------------------------------------------------
