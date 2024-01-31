@@ -73,8 +73,45 @@ router.post("/register", async (req, res) => {
   }
 });
 
+//---------------Admin Dashboard------------------------------------
 router.get("/dashboard", authMiddleware, async (req, res) => {
-  res.render("admin/dashboard");
+  try {
+    const data = await Post.find();
+    res.render("admin/dashboard", { data, layout: adminLayout });
+  } catch (error) {
+    console.log(error);
+  }
 });
+//------------------------------------------------------------------
+
+//------------Create new Post Page Route-----------------------------------------
+router.get("/add-post", authMiddleware, async (req, res) => {
+  try {
+    const locals = {
+      title: "Add a Post",
+      description: "Page to add a new post",
+    };
+    //const data = await Post.find();
+    res.render("admin/add-post", { locals, layout: adminLayout });
+  } catch (error) {
+    console.log(error);
+  }
+});
+//--------------------------------------------------------------------------
+
+//------------Add a new Post-----------------------------------------
+router.post("/add-post", authMiddleware, async (req, res) => {
+  try {
+    const newPost = new Post({
+      title: req.body.title,
+      body: req.body.body,
+    });
+    await Post.create(newPost);
+    res.redirect("/dashboard");
+  } catch (error) {
+    console.log(error);
+  }
+});
+//--------------------------------------------------------------------------
 
 module.exports = router;
