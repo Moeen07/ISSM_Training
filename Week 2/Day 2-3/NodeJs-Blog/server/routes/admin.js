@@ -150,4 +150,13 @@ router.delete("/delete-post/:id", authMiddleware, async (req, res) => {
   }
 });
 //--------------------------------------------------------------------------
+
+//-------------Logout route-------------------------------------------------
+router.get("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.redirect("/");
+  //res.json({ msg: "Logout Successful" });
+});
+
+//--------------------------------------------------------------------------
 module.exports = router;
