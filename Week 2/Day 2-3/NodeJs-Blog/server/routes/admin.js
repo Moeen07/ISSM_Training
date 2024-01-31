@@ -24,8 +24,17 @@ router.get("/admin", async (req, res) => {
 router.post("/admin", async (req, res) => {
   try {
     const { username, password } = req.body;
-
-    res.redirect("/admin");
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(401).json({ msg: "Invalid Username" });
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ msg: "Invalid Password" });
+    }
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    res.cookie("token", token, { httpOnly: true });
+    res.redirect("/dashboard");
   } catch (error) {
     console.log(error);
   }
@@ -45,6 +54,10 @@ router.post("/register", async (req, res) => {
     }
     res.status(500).json({ msg: "Internal server error" });
   }
+});
+
+router.get("/dashboard", (req, res) => {
+  res.render("admin/dashboard");
 });
 
 module.exports = router;
