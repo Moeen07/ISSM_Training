@@ -114,4 +114,29 @@ router.post("/add-post", authMiddleware, async (req, res) => {
 });
 //--------------------------------------------------------------------------
 
+//------------Edit Post Page Route-----------------------------------------
+router.get("/edit-post/:id", authMiddleware, async (req, res) => {
+  try {
+    const data = await Post.findById(req.params.id);
+    res.render("admin/edit-post", { data, layout: adminLayout });
+  } catch (error) {
+    console.log(error);
+  }
+});
+//--------------------------------------------------------------------------
+
+//------------Edit Post Route-----------------------------------------
+router.put("/edit-post/:id", authMiddleware, async (req, res) => {
+  try {
+    await Post.findByIdAndUpdate(req.params.id, {
+      title: req.body.title,
+      body: req.body.body,
+      updatedAt: Date.now(),
+    });
+    res.redirect("/dashboard");
+  } catch (error) {
+    console.log(error);
+  }
+});
+//--------------------------------------------------------------------------
 module.exports = router;
