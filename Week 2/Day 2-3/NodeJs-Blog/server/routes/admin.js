@@ -6,6 +6,23 @@ const adminLayout = "../views/layouts/admin";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+//----------Auth Middleware--------------------------
+const authMiddleware = (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.userId = decoded.userId;
+    next();
+  } catch (error) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+};
+
+//------------------------------------------------------
+
 //-----------Admin login route------------------------------------
 router.get("/admin", async (req, res) => {
   try {
@@ -56,7 +73,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.get("/dashboard", (req, res) => {
+router.get("/dashboard", authMiddleware, async (req, res) => {
   res.render("admin/dashboard");
 });
 
