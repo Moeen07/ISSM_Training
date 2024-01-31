@@ -1,7 +1,11 @@
 require("dotenv").config();
 const mainRoutes = require("./server/routes/main");
+const adminRoutes = require("./server/routes/admin");
 const express = require("express");
 const expressLayout = require("express-ejs-layouts");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
 
 const connectDB = require("./server/config/db");
 
@@ -13,6 +17,18 @@ connectDB();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
+
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+    }),
+  })
+);
 
 app.use(express.static("public"));
 
@@ -22,6 +38,7 @@ app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
 
 app.use("/", mainRoutes);
+app.use("/", adminRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running at ${PORT}`);
