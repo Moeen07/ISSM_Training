@@ -1,4 +1,3 @@
-const express = require("express");
 const Post = require("../models/Post");
 
 const homeRoute = async (req, res) => {
