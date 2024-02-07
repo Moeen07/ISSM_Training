@@ -1,4 +1,5 @@
 const Post = require("../models/Post");
+const User = require("../models/User");
 
 const homeRoute = async (req, res) => {
   try {
@@ -47,4 +48,57 @@ const searchPost = async (req, res) => {
   }
 };
 
-module.exports = { homeRoute, singlePost, searchPost };
+const login = async (req, res) => {
+  try {
+    res.send("This is login page");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const checkLogin = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(401).json({ msg: "Invalid Username" });
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ msg: "Invalid Password" });
+    }
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    res.cookie("token", token, { httpOnly: true });
+    res.send("Login Confirmed");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const register = async (req, res) => {
+  try {
+    const { username, password, role } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      username,
+      password: hashedPassword,
+      role,
+    });
+    res.status(201).json({ msg: "User Created" });
+  } catch (error) {
+    if (error.code === 11000) {
+      res.status(409).json({ msg: "User already exists" });
+    }
+    res.status(500).json({ msg: "Internal server error" });
+  }
+};
+
+module.exports = {
+  homeRoute,
+  singlePost,
+  searchPost,
+  login,
+  checkLogin,
+  register,
+};

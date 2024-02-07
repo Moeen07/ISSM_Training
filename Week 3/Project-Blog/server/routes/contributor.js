@@ -23,10 +23,9 @@ router.delete("/delete-post/:id", authMiddleware, deletePost);
 
 //------------Create new Post Page Route-----------------------------------------
 router.get("/add-post", authMiddleware, addPostPage);
-//--------------------------------------------------------------------------
 
 //------------Add a new Post-----------------------------------------
 router.post("/add-post", authMiddleware, addPost);
 
-//---------------Admin Dashboard------------------------------------
+//---------------Dashboard------------------------------------
 router.get("/dashboard", authMiddleware, dashboard);

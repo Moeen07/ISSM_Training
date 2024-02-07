@@ -2,9 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  login,
-  checkLogin,
-  register,
   editPostPage,
   editPost,
   deletePost,
@@ -12,15 +9,6 @@ const {
 } = require("../controllers/admin-controller");
 
 const { authMiddleware } = require("../middleware/auth-middleware");
-
-//-----------Admin login route------------------------------------
-router.get("/admin", login);
-
-//-----------Admin Check login route------------------------------------
-router.post("/admin", checkLogin);
-
-//-----------Register route-------------------------------------------
-router.post("/register", register);
 
 //---------------Admin Dashboard------------------------------------
 router.get("/dashboard", authMiddleware, dashboard);
