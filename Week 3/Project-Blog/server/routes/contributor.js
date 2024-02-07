@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { authMiddleware } = require("../middleware/auth-middleware");
+const authMiddleware = require("../middleware/auth-middleware");
 
 const {
   addPost,
@@ -28,4 +28,6 @@ router.get("/add-post", authMiddleware, addPostPage);
 router.post("/add-post", authMiddleware, addPost);
 
 //---------------Dashboard------------------------------------
-router.get("/dashboard", authMiddleware, dashboard);
+router.get("/", authMiddleware, dashboard);
+
+module.exports = router;

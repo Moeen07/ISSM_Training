@@ -7,12 +7,18 @@ const MongoStore = require("connect-mongo");
 
 const app = express();
 
-const connectDB = require("../server/config/db");
+const connectDB = require("./server/config/db");
+const mainRoutes = require("./server/routes/main");
+const adminRoutes = require("./server/routes/admin");
+const editorRoutes = require("./server/routes/editor");
+const contributorRoutes = require("./server/routes/contributor");
 
 connectDB();
 
 app.use(express.json());
 app.use(cookieParser());
+
+const PORT = 5000 || process.env.PORT;
 
 app.use(
   session({
@@ -25,7 +31,14 @@ app.use(
   })
 );
 
-const PORT = 5000 || process.env.PORT;
+app.get("/", (req, res) => {
+  res.send("THIS IS HOMEPAGE");
+});
+
+app.use("/api/v1", mainRoutes);
+app.use("/api/v1/admin", adminRoutes);
+app.use("/api/v1/editor", editorRoutes);
+app.use("/api/v1/contributor", contributorRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running at ${PORT}`);

@@ -6,12 +6,14 @@ const {
   editPost,
   dashboard,
 } = require("../controllers/editor-controller");
-const { authMiddleware } = require("../middleware/auth-middleware");
+const authMiddleware = require("../middleware/auth-middleware");
 //---------------Dashboard------------------------------------
-router.get("/dashboard", authMiddleware, dashboard);
+router.get("/", authMiddleware, dashboard);
 
 //------------Edit Post Page Route-----------------------------------------
 router.get("/edit-post/:id", authMiddleware, editPostPage);
 
 //------------Edit Post Route-----------------------------------------
 router.put("/edit-post/:id", authMiddleware, editPost);
+
+module.exports = router;

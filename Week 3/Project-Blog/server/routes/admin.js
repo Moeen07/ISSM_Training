@@ -8,10 +8,10 @@ const {
   dashboard,
 } = require("../controllers/admin-controller");
 
-const { authMiddleware } = require("../middleware/auth-middleware");
+const authMiddleware = require("../middleware/auth-middleware");
 
 //---------------Admin Dashboard------------------------------------
-router.get("/dashboard", authMiddleware, dashboard);
+router.get("/", authMiddleware, dashboard);
 
 //------------Edit Post Page Route-----------------------------------------
 router.get("/edit-post/:id", authMiddleware, editPostPage);
