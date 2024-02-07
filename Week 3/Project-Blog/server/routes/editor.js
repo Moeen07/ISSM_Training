@@ -1,8 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const { editPostPage, editPost } = require("../controllers/editor-controller");
-
+const {
+  editPostPage,
+  editPost,
+  dashboard,
+} = require("../controllers/editor-controller");
+const { authMiddleware } = require("../middleware/auth-middleware");
 //---------------Dashboard------------------------------------
 router.get("/dashboard", authMiddleware, dashboard);
 

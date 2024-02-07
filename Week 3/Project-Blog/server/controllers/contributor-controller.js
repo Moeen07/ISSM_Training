@@ -1,5 +1,21 @@
 const Post = require("../models/Post");
 
+const addPostPage = async (req, res) => {
+  try {
+    //const data = await Post.find();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const addPost = async (req, res) => {
+  try {
+    await Post.create(newPost);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const editPostPage = async (req, res) => {
   try {
     const data = await Post.findById(req.params.id);
@@ -22,6 +38,15 @@ const editPost = async (req, res) => {
   }
 };
 
+const deletePost = async (req, res) => {
+  try {
+    await Post.deleteOne({ _id: req.params.id });
+    res.send("Post Deleted");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const dashboard = async (req, res) => {
   try {
     const data = await Post.find();
@@ -31,4 +56,11 @@ const dashboard = async (req, res) => {
   }
 };
 
-module.exports = { editPostPage, editPost, dashboard };
+module.exports = {
+  editPostPage,
+  editPost,
+  deletePost,
+  dashboard,
+  addPost,
+  addPostPage,
+};
