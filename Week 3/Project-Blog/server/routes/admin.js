@@ -28,5 +28,4 @@ router.get("/logout", (req, res) => {
   res.json({ msg: "Logout Successful" });
 });
 
-//--------------------------------------------------------------------------
 module.exports = router;

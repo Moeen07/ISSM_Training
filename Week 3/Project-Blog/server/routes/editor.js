@@ -7,6 +7,7 @@ const {
   dashboard,
 } = require("../controllers/editor-controller");
 const authMiddleware = require("../middleware/auth-middleware");
+
 //---------------Dashboard------------------------------------
 router.get("/", authMiddleware, dashboard);
 

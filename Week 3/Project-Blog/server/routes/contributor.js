@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const authMiddleware = require("../middleware/auth-middleware");
-
+const permissionMiddleware = require("../middleware/permission-middleware");
 const {
   addPost,
   addPostPage,
@@ -13,13 +13,23 @@ const {
 } = require("../controllers/contributor-controller");
 
 //------------Edit Post Page Route-----------------------------------------
-router.get("/edit-post/:id", authMiddleware, editPostPage);
+router.get(
+  "/edit-post/:id",
+  authMiddleware,
+  permissionMiddleware,
+  editPostPage
+);
 
 //------------Edit Post Route-----------------------------------------
-router.put("/edit-post/:id", authMiddleware, editPost);
+router.put("/edit-post/:id", authMiddleware, permissionMiddleware, editPost);
 
 //------------Delete Post Route-----------------------------------------
-router.delete("/delete-post/:id", authMiddleware, deletePost);
+router.delete(
+  "/delete-post/:id",
+  authMiddleware,
+  permissionMiddleware,
+  deletePost
+);
 
 //------------Create new Post Page Route-----------------------------------------
 router.get("/add-post", authMiddleware, addPostPage);

@@ -10,22 +10,22 @@ const {
   register,
 } = require("../controllers/main-controller");
 
-//------------Home Route---------------------------
+//------------Home Route-----------------------------------------
 router.get("/", homeRoute);
 
-//-----------Get Single Post Route--------------------------------------
+//-----------Get Single Post Route-------------------------------
 router.get("/post/:id", singlePost);
 
-//-------------------------------Search Route-----------------------------------------------------
+//-------------------------------Search Route--------------------
 router.post("/search", searchPost);
 
 //-----------Login Page route------------------------------------
 router.get("/login", login);
 
-//-----------Check login route------------------------------------
+//-----------Check login route-----------------------------------
 router.post("/login", checkLogin);
 
-//-----------Register route-------------------------------------------
+//-----------Register route--------------------------------------
 router.post("/register", register);
 
 module.exports = router;
