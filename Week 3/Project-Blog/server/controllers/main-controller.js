@@ -10,6 +10,8 @@ const homeRoute = async (req, res) => {
       .limit(perPage)
       .exec();
 
+    res.send(data);
+
     const count = await Post.countDocuments();
     const nextPage = parseInt(page) + 1;
     const hasNextPage = nextPage <= Math.ceil(count / perPage);
@@ -22,10 +24,7 @@ const singlePost = async (req, res) => {
   try {
     let slug = req.params.id;
     const data = await Post.findById({ _id: slug });
-    const locals = {
-      title: data.title,
-      description: data.body,
-    };
+    res.send(data);
   } catch (error) {
     console.log(error);
   }
@@ -33,11 +32,6 @@ const singlePost = async (req, res) => {
 
 const searchPost = async (req, res) => {
   try {
-    const locals = {
-      title: "Search",
-      description: "...",
-    };
-
     let searchTerm = req.body.searchTerm;
     const searchNoSpecialChar = searchTerm.replace(/[^a-zA-z0-9]/g, "");
 
@@ -47,6 +41,7 @@ const searchPost = async (req, res) => {
         { body: { $regex: new RegExp(searchNoSpecialChar, "i") } },
       ],
     });
+    res.send(data);
   } catch (error) {
     console.log(error);
   }
