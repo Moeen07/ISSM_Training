@@ -31,7 +31,7 @@ router.delete(
   deletePost
 );
 
-//------------Create new Post Page Route-----------------------------------------
+//------------Create new Post Page Route-------------------------------
 router.get("/add-post", authMiddleware, addPostPage);
 
 //------------Add a new Post-----------------------------------------
