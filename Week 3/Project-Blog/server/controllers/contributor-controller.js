@@ -10,6 +10,10 @@ const addPostPage = async (req, res) => {
 
 const addPost = async (req, res) => {
   try {
+    const newPost = new Post({
+      title: req.body.title,
+      body: req.body.body,
+    });
     await Post.create(newPost);
   } catch (error) {
     console.log(error);

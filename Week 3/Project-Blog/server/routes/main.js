@@ -11,7 +11,7 @@ const {
 } = require("../controllers/main-controller");
 
 //------------Home Route-----------------------------------------
-router.get("/", homeRoute);
+router.get("/home", homeRoute);
 
 //-----------Get Single Post Route-------------------------------
 router.get("/post/:id", singlePost);

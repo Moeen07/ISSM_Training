@@ -3,6 +3,10 @@ const User = require("../models/User");
 
 const homeRoute = async (req, res) => {
   try {
+    const locals = {
+      title: "NodeJS-Blog",
+      description: "Simple blog",
+    };
     let perPage = 2;
     let page = req.query.page || 1;
 
@@ -11,11 +15,18 @@ const homeRoute = async (req, res) => {
       .limit(perPage)
       .exec();
 
-    res.send(data);
+    //res.send(data);
 
     const count = await Post.countDocuments();
     const nextPage = parseInt(page) + 1;
     const hasNextPage = nextPage <= Math.ceil(count / perPage);
+
+    res.render("index", {
+      locals,
+      data,
+      current: page,
+      nextPage: hasNextPage ? nextPage : null,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -25,7 +36,11 @@ const singlePost = async (req, res) => {
   try {
     let slug = req.params.id;
     const data = await Post.findById({ _id: slug });
-    res.send(data);
+    const locals = {
+      title: data.title,
+      description: data.body,
+    };
+    res.render("post", { locals, data });
   } catch (error) {
     console.log(error);
   }
@@ -33,6 +48,10 @@ const singlePost = async (req, res) => {
 
 const searchPost = async (req, res) => {
   try {
+    const locals = {
+      title: "Search",
+      description: "...",
+    };
     let searchTerm = req.body.searchTerm;
     const searchNoSpecialChar = searchTerm.replace(/[^a-zA-z0-9]/g, "");
 
@@ -42,7 +61,7 @@ const searchPost = async (req, res) => {
         { body: { $regex: new RegExp(searchNoSpecialChar, "i") } },
       ],
     });
-    res.send(data);
+    res.render("search", { locals, data });
   } catch (error) {
     console.log(error);
   }
@@ -93,6 +112,32 @@ const register = async (req, res) => {
     res.status(500).json({ msg: "Internal server error" });
   }
 };
+
+// function insertPostData() {
+//   Post.insertMany([
+//     {
+//       title: "Building a Blog",
+//       body: "This is the body text",
+//     },
+//     {
+//       title: "Second Blog",
+//       body: "Text of second blog",
+//     },
+//     {
+//       title: "Third Blog",
+//       body: "Here is the body for third blog",
+//     },
+//     {
+//       title: "Fourth Blog",
+//       body: "This is the body for the fourth blog",
+//     },
+//     {
+//       title: "Fifth Blog",
+//       body: "Body text for fifth blog",
+//     },
+//   ]);
+// }
+// insertPostData();
 
 module.exports = {
   homeRoute,
