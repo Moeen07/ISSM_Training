@@ -1,6 +1,8 @@
 const Post = require("../models/Post");
 const User = require("../models/User");
-
+const adminLayout = "../views/layouts/admin";
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const homeRoute = async (req, res) => {
   try {
     const locals = {
@@ -14,8 +16,6 @@ const homeRoute = async (req, res) => {
       .skip(perPage * page - perPage)
       .limit(perPage)
       .exec();
-
-    //res.send(data);
 
     const count = await Post.countDocuments();
     const nextPage = parseInt(page) + 1;
@@ -69,7 +69,7 @@ const searchPost = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    res.send("This is login page");
+    res.render("admin/index", { layout: adminLayout });
   } catch (error) {
     console.log(error);
   }

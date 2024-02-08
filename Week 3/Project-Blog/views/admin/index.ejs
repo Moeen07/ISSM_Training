@@ -1,6 +1,6 @@
 <h3>Sign In</h3>
 
-<form action="/admin" method="POST">
+<form action="/login" method="POST">
   <label for="username"><b>Username</b></label>
   <input type="text" placeholder="Enter Username" name="username" />
 
@@ -15,6 +15,13 @@
 <form action="/register" method="POST">
   <label for="username"><b>Username</b></label>
   <input type="text" placeholder="Enter Username" name="username" />
+  <label for="role"><b>Role</b></label>
+  <select id="role" name="role" required>
+    <option value="" disabled selected>Select a Role</option>
+    <option value="Admin">Admin</option>
+    <option value="Editor">Editor</option>
+    <option value="Contributor">Contributor</option>
+  </select>
 
   <label for="password"><b>Password</b></label>
   <input type="password" placeholder="Enter Password" name="password" />

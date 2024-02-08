@@ -20,7 +20,7 @@ router.get("/post/:id", singlePost);
 router.post("/search", searchPost);
 
 //-----------Login Page route------------------------------------
-router.get("/login", login);
+router.get("/user", login);
 
 //-----------Check login route-----------------------------------
 router.post("/login", checkLogin);
