@@ -80,6 +80,11 @@ const checkLogin = async (req, res) => {
 const register = async (req, res) => {
   try {
     const { username, password, role } = req.body;
+    const existingUser = await User.findOne({ username });
+
+    if (existingUser) {
+      return res.status(409).json({ msg: "Username already taken" });
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
@@ -87,11 +92,9 @@ const register = async (req, res) => {
       password: hashedPassword,
       role,
     });
-    res.status(201).json({ msg: "User Created" });
+    res.status(201).json({ msg: "User Created", user });
   } catch (error) {
-    if (error.code === 11000) {
-      res.status(409).json({ msg: "User already exists" });
-    }
+    console.log(error);
     res.status(500).json({ msg: "Internal server error" });
     console.log(error);
   }
