@@ -13,9 +13,9 @@ const allPosts = async (req, res) => {
 
     res.send(data);
 
-    const count = await Post.countDocuments();
-    const nextPage = parseInt(page) + 1;
-    const hasNextPage = nextPage <= Math.ceil(count / perPage);
+    //const count = await Post.countDocuments();
+    //const nextPage = parseInt(page) + 1;
+    //const hasNextPage = nextPage <= Math.ceil(count / perPage);
   } catch (error) {
     console.log(error);
   }
@@ -37,22 +37,22 @@ const singlePost = async (req, res) => {
 
 //-------------------------Search Post---------------------------------------
 
-// const searchPost = async (req, res) => {
-//   try {
-//     let searchTerm = req.body.searchTerm;
-//     const searchNoSpecialChar = searchTerm.replace(/[^a-zA-z0-9]/g, "");
+const searchPost = async (req, res) => {
+  try {
+    let searchTerm = req.query.searchTerm;
+    const searchNoSpecialChar = searchTerm.replace(/[^a-zA-z0-9]/g, "");
 
-//     const data = await Post.find({
-//       $or: [
-//         { title: { $regex: new RegExp(searchNoSpecialChar, "i") } },
-//         { body: { $regex: new RegExp(searchNoSpecialChar, "i") } },
-//       ],
-//     });
-//     res.send(data);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+    const data = await Post.find({
+      $or: [
+        { title: { $regex: new RegExp(searchNoSpecialChar, "i") } },
+        { body: { $regex: new RegExp(searchNoSpecialChar, "i") } },
+      ],
+    });
+    res.send(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 //---------------------------------------------------------------------------
 
 //---------------------------Add Post----------------------------------------
@@ -77,7 +77,7 @@ const editPost = async (req, res) => {
     await Post.findByIdAndUpdate(req.params.id, {
       title: req.body.title,
       body: req.body.body,
-      updatedAt: Date.now(),
+      updatedAt: Date.now(), // Does automatically(unnecessary)
     });
     res.send("Post edited successfully");
   } catch (error) {
@@ -102,6 +102,7 @@ module.exports = {
   allPosts,
   singlePost,
   addPost,
+  searchPost,
   editPost,
   deletePost,
 };

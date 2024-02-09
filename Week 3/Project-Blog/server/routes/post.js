@@ -8,6 +8,7 @@ const {
   allPosts,
   singlePost,
   addPost,
+  searchPost,
   editPost,
   deletePost,
 } = require("../controllers/post-controller");
@@ -19,7 +20,7 @@ router.get("/", allPosts);
 router.get("/:id", singlePost);
 
 //-------------------------------Search Post------------------------
-// router.post("/search", searchPost);
+router.get("/search", searchPost);
 
 //------------Add a new Post-----------------------------------------
 router.post("/add-post", authMiddleware, addPost);
