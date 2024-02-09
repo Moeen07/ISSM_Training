@@ -1,5 +1,7 @@
 const Post = require("../models/Post");
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const homeRoute = async (req, res) => {
   try {
@@ -91,6 +93,7 @@ const register = async (req, res) => {
       res.status(409).json({ msg: "User already exists" });
     }
     res.status(500).json({ msg: "Internal server error" });
+    console.log(error);
   }
 };
 
