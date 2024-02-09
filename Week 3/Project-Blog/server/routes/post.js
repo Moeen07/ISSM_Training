@@ -34,3 +34,5 @@ router.delete(
   authMiddleware,
   deletePost
 );
+
+module.exports = router;
