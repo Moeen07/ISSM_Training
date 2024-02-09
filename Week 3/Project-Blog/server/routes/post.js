@@ -3,6 +3,7 @@ const router = express.Router();
 
 const authMiddleware = require("../middleware/auth-middleware");
 const permissionMiddleware = require("../middleware/permission-middleware");
+const deleteMiddleware = require("../middleware/delete-permission-middleware");
 const {
   allPosts,
   singlePost,
@@ -27,6 +28,6 @@ router.post("/add-post", authMiddleware, addPost);
 router.put("/:id", permissionMiddleware, authMiddleware, editPost);
 
 //------------Delete Post-----------------------------------------
-router.delete("/:id", permissionMiddleware, authMiddleware, deletePost);
+router.delete("/:id", deleteMiddleware, authMiddleware, deletePost);
 
 module.exports = router;
