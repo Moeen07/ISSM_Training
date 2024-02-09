@@ -8,10 +8,9 @@ const cors = require("cors");
 const app = express();
 
 const connectDB = require("./server/config/db");
-const mainRoutes = require("./server/routes/main");
-const adminRoutes = require("./server/routes/admin");
-const editorRoutes = require("./server/routes/editor");
-const contributorRoutes = require("./server/routes/contributor");
+
+const userRoutes = require("./server/routes/user");
+const postRoutes = require("./server/routes/post");
 
 connectDB();
 
@@ -38,10 +37,8 @@ app.get("/", (req, res) => {
   res.send("THIS IS HOMEPAGE");
 });
 
-app.use("/api/v1", mainRoutes);
-app.use("/api/v1/admin", adminRoutes);
-app.use("/api/v1/editor", editorRoutes);
-app.use("/api/v1/contributor", contributorRoutes);
+app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/post", postRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running at ${PORT}`);
