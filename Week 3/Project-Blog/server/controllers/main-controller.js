@@ -92,7 +92,7 @@ const register = async (req, res) => {
       password: hashedPassword,
       role,
     });
-    res.status(201).json({ msg: "User Created", user });
+    res.status(201).json({ msg: "User Created successfully", user });
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: "Internal server error" });
