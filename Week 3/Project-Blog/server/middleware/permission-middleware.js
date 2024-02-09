@@ -1,8 +1,16 @@
 const Post = require("../models/Post");
+const User = require("../models/User");
+const jwt = require("jsonwebtoken");
 
 const editPostAuthorizationMiddleware = async (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const userId = decoded.userId;
+
   const postId = req.params.id;
-  const userId = req.user.id;
 
   try {
     const post = await Post.findById(postId);
@@ -10,15 +18,14 @@ const editPostAuthorizationMiddleware = async (req, res, next) => {
     if (!post) {
       return res.status(404).send("Post not found");
     }
+    const user = await User.findById(userId);
+    const userRole = user.role;
 
-    if (req.user.role === "Admin" || req.user.role === "Editor") {
+    if (userRole === "Admin" || userRole === "Editor") {
       return next();
     }
 
-    if (
-      req.user.role === "Contributor" &&
-      post.createdBy.toString() === userId
-    ) {
+    if (userRole === "Contributor" && post.createdBy.toString() === userId) {
       return next();
     }
 

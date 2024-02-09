@@ -3,7 +3,7 @@ const Post = require("../models/Post");
 //-------Get All Posts----------------------------------------------------------
 const allPosts = async (req, res) => {
   try {
-    let perPage = 2;
+    let perPage = 10;
     let page = req.query.page || 1;
 
     const data = await Post.aggregate([{ $sort: { createdAt: -1 } }])
@@ -37,29 +37,35 @@ const singlePost = async (req, res) => {
 
 //-------------------------Search Post---------------------------------------
 
-const searchPost = async (req, res) => {
-  try {
-    let searchTerm = req.body.searchTerm;
-    const searchNoSpecialChar = searchTerm.replace(/[^a-zA-z0-9]/g, "");
+// const searchPost = async (req, res) => {
+//   try {
+//     let searchTerm = req.body.searchTerm;
+//     const searchNoSpecialChar = searchTerm.replace(/[^a-zA-z0-9]/g, "");
 
-    const data = await Post.find({
-      $or: [
-        { title: { $regex: new RegExp(searchNoSpecialChar, "i") } },
-        { body: { $regex: new RegExp(searchNoSpecialChar, "i") } },
-      ],
-    });
-    res.send(data);
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     const data = await Post.find({
+//       $or: [
+//         { title: { $regex: new RegExp(searchNoSpecialChar, "i") } },
+//         { body: { $regex: new RegExp(searchNoSpecialChar, "i") } },
+//       ],
+//     });
+//     res.send(data);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 //---------------------------------------------------------------------------
 
 //---------------------------Add Post----------------------------------------
 
 const addPost = async (req, res) => {
   try {
+    const newPost = new Post({
+      title: req.body.title,
+      body: req.body.body,
+      createdBy: req.userId,
+    });
     await Post.create(newPost);
+    res.send("Post added successfully");
   } catch (error) {
     console.log(error);
   }
@@ -95,7 +101,6 @@ const deletePost = async (req, res) => {
 module.exports = {
   allPosts,
   singlePost,
-  searchPost,
   addPost,
   editPost,
   deletePost,
