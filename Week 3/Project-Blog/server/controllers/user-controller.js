@@ -38,7 +38,7 @@ const login = async (req, res) => {
     }
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
     res.cookie("token", token, { httpOnly: true });
-    res.send("Login Confirmed");
+    res.json({ msg: "Login Confirmed", userRole: user.role });
   } catch (error) {
     console.log(error);
   }
